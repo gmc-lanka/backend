@@ -1,13 +1,13 @@
 # GMC Lanka – Backend
 
-[![CI/CD Pipeline](https://github.com/test-gmc-lanka/backend/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/test-gmc-lanka/backend/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/test-gmc-lanka/backend/branch/develop/graph/badge.svg)](https://codecov.io/gh/test-gmc-lanka/backend)
+[![CI/CD Pipeline](https://github.com/gmc-lanka/backend/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/gmc-lanka/backend/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/gmc-lanka/backend/branch/develop/graph/badge.svg)](https://codecov.io/gh/gmc-lanka/backend)
 
 REST API for the GMC Lanka system: products and categories, cart and checkout with Stripe card payments,
 orders and invoices, appointments, custom designs, maintenance tasks for technicians, feedback,
 complaints, notifications and the admin dashboard. Part of the
-[test-gmc-lanka](https://github.com/test-gmc-lanka) project; the web client is in the
-[frontend](https://github.com/test-gmc-lanka/frontend) repository.
+[gmc-lanka](https://github.com/gmc-lanka) project; the web client is in the
+[frontend](https://github.com/gmc-lanka/frontend) repository.
 
 **Staging API:** _add the staging URL here once deployed_ · **API docs:** `<base-url>/swagger-ui.html`
 
@@ -25,7 +25,7 @@ Stripe · springdoc-openapi · JUnit 5 + Mockito + MockMvc · JaCoCo · Checksty
 ## Getting started
 
 ```bash
-git clone https://github.com/test-gmc-lanka/backend.git
+git clone https://github.com/gmc-lanka/backend.git
 cd backend
 git checkout develop
 ```
@@ -57,15 +57,15 @@ Without Stripe keys, checkout offers cash on delivery only.
 
 ## Commands
 
-| Command                              | What it does                                                      |
-| ------------------------------------ | ----------------------------------------------------------------- |
-| `./mvnw spring-boot:run`             | Run the API locally                                               |
-| `./mvnw test`                        | Unit tests (H2 in-memory DB) + coverage in `target/site/jacoco`   |
-| `./mvnw verify`                      | Unit + integration tests, merged coverage and the 80% gate        |
-| `./mvnw checkstyle:check`            | Lint                                                              |
-| `./mvnw spotless:check`              | Formatting check                                                  |
-| `./mvnw spotless:apply`              | Reformat the code (Palantir Java Format)                          |
-| `./mvnw package -DskipTests`         | Build `target/backend-*.jar`                                      |
+| Command                      | What it does                                                    |
+| ---------------------------- | --------------------------------------------------------------- |
+| `./mvnw spring-boot:run`     | Run the API locally                                             |
+| `./mvnw test`                | Unit tests (H2 in-memory DB) + coverage in `target/site/jacoco` |
+| `./mvnw verify`              | Unit + integration tests, merged coverage and the 80% gate      |
+| `./mvnw checkstyle:check`    | Lint                                                            |
+| `./mvnw spotless:check`      | Formatting check                                                |
+| `./mvnw spotless:apply`      | Reformat the code (Palantir Java Format)                        |
+| `./mvnw package -DskipTests` | Build `target/backend-*.jar`                                    |
 
 ## Testing
 
@@ -100,7 +100,7 @@ The pipeline in [.github/workflows/ci.yml](.github/workflows/ci.yml) runs:
 | Deploy – Staging    | Merge to `develop`                           |
 | Deploy – Production | Merge to `main`, after manual approval       |
 
-Deploys build a Docker image, push it to `ghcr.io/test-gmc-lanka/backend` and call the hosting
+Deploys build a Docker image, push it to `ghcr.io/gmc-lanka/backend` and call the hosting
 provider's deploy hook. A production deploy also creates the `vX.Y.Z` release tag from `pom.xml`.
 Accepted scanner findings, each with a reason and an expiry date, are listed in `.trivyignore.yaml`.
 
