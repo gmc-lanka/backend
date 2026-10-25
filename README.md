@@ -11,6 +11,8 @@ complaints, notifications and the admin dashboard. Part of the
 [tests](https://github.com/gmc-lanka/tests) and the Dockerfile and CI/CD pipeline in
 [infra](https://github.com/gmc-lanka/infra).
 
+**Live site:** [gmc-lanka.lk](https://gmc-lanka.lk/)
+
 **Staging API:** _add the staging URL here once deployed_ · **API docs:** `<base-url>/swagger-ui.html`
 
 ## Tech stack
