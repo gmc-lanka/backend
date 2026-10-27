@@ -28,7 +28,7 @@ Use the following demo accounts to explore the GMC Lanka system.
 - **Admin:** Manage products, categories, orders, appointments, users, and other administrative functions, subject to configured permissions.
 - **Technician:** View assigned maintenance tasks and update task statuses.
 
-**Staging API:** _add the staging URL here once deployed_ · **API docs:** `<base-url>/swagger-ui.html`
+
 
 ## Tech stack
 
