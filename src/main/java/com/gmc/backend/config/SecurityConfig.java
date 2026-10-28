@@ -29,7 +29,7 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${app.cors.allowed-origins:http://localhost:5173}")
+    @Value("${app.cors.allowed-origins:https://www.gmc-lanka.lk}")
     private String allowedOrigin;
 
     public SecurityConfig(
