@@ -2,6 +2,8 @@
 
 [![CI/CD Pipeline](https://github.com/gmc-lanka/backend/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/gmc-lanka/backend/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/gmc-lanka/backend/branch/develop/graph/badge.svg)](https://codecov.io/gh/gmc-lanka/backend)
+[![CI/CD Pipeline](https://github.com/gmc-lanka/backend/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/gmc-lanka/backend/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/gmc-lanka/backend/branch/develop/graph/badge.svg)](https://codecov.io/gh/gmc-lanka/backend)
 
 REST API for the GMC Lanka system: products and categories, cart and checkout with Stripe card payments,
 orders and invoices, appointments, custom designs, maintenance tasks for technicians, feedback,
@@ -20,15 +22,19 @@ Stripe · springdoc-openapi · JUnit 5 + Mockito + MockMvc · JaCoCo · Checksty
 
 - JDK 21 (no Maven install needed: use the included `./mvnw` wrapper)
 - MySQL 8 with an empty database, e.g. `CREATE DATABASE gmc_db;`
-- Docker (only to build or run the container image)
+- Docker (only to build or run the container image; see [infra](https://github.com/gmc-lanka/infra))
 
 ## Getting started
 
 ```bash
 git clone https://github.com/gmc-lanka/backend.git
+git clone https://github.com/gmc-lanka/backend.git
 cd backend
 git checkout develop
 ```
+
+For `./mvnw verify`, also clone [tests](https://github.com/gmc-lanka/tests) next to this repository
+(`<workspace>/backend` and `<workspace>/tests`); that is where the `*IT.java` suites live.
 
 Configure the app. Every setting has a safe default in `src/main/resources/application.properties`;
 you only need to supply your own values (see [.env.example](.env.example) for the full list).
@@ -70,25 +76,33 @@ Without Stripe keys, checkout offers cash on delivery only.
 ## Testing
 
 - **Unit tests** (`*Test.java`) test one class with Mockito mocks.
-- **Integration tests** (`*IT.java`, in `src/test/java/com/gmc/backend/it/`) call every REST endpoint
-  through MockMvc with the real security filter chain and database: H2 locally, MySQL 8 in CI.
-  Each test runs in a rolled-back transaction; email and Stripe are mocked.
+- **Integration tests** (`*IT.java`) live in the [tests](https://github.com/gmc-lanka/tests)
+  repository under `backend/src/test/java/com/gmc/backend/it/`. `pom.xml` adds that folder as a test
+  source root (property `integration-tests.dir`, default `../tests/backend/src/test/java`). They call
+  every REST endpoint through MockMvc with the real security filter chain and database: H2 locally,
+  MySQL 8 in CI. Each test runs in a rolled-back transaction; email and Stripe are mocked.
 - Coverage: `./mvnw verify` merges unit and integration coverage into `target/site/jacoco-merged`
   and fails below 80% line coverage.
 
 ## Running with Docker
 
+The Dockerfile is in the [infra](https://github.com/gmc-lanka/infra) repository. With `infra`
+cloned next to this repository:
+
 ```bash
-docker build -t gmc-backend .
+docker build -f ../infra/docker/backend/Dockerfile -t gmc-backend .
 docker run --rm -p 8080:8080 --env-file .env -v gmc-uploads:/app/uploads gmc-backend
 ```
 
 `.env` is your copy of `.env.example`. Uploaded images are stored in `/app/uploads`; mount a
-persistent volume there so they survive restarts and redeploys.
+persistent volume there so they survive restarts and redeploys. To run the whole stack (MySQL, backend,
+frontend), use `docker compose up --build` in `infra`.
 
 ## CI/CD
 
-The pipeline in [.github/workflows/ci.yml](.github/workflows/ci.yml) runs:
+[.github/workflows/ci.yml](.github/workflows/ci.yml) sets the triggers and calls the pipeline defined in
+[infra/.github/workflows/backend-ci.yml](https://github.com/gmc-lanka/infra/blob/main/.github/workflows/backend-ci.yml),
+which runs:
 
 | Stage               | Trigger                                      |
 | ------------------- | -------------------------------------------- |
